@@ -1,8 +1,8 @@
 const hre = require("hardhat");
 
 async function main() {
-    const ESGOracle = await hre.ethers.getContractFactory("ESGOracle");
-    const contract = await ESGOracle.deploy();
+    const ESGReputationManagement = await hre.ethers.getContractFactory("ESGReputationManagement");
+    const contract = await ESGReputationManagement.deploy();
 
     await contract.waitForDeployment();
     console.log(`Contract deployed at: ${await contract.getAddress()}`);

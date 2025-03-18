@@ -17,16 +17,7 @@ contract ESGOracle is IESGOracle {
 
     event ESGDataUpdated(address indexed company, uint8 environmental, uint8 social, uint8 governance);
 
-    constructor() {
-        admin = msg.sender;
-    }
-
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can update ESG data");
-        _;
-    }
-
-    function updateESGData(address company, uint8 env, uint8 soc, uint8 gov) external onlyAdmin {
+    function updateESGData(address company, uint8 env, uint8 soc, uint8 gov) external {
         require(env <= 100 && soc <= 100 && gov <= 100, "Invalid ESG values");
         esgData[company] = ESGScores(env, soc, gov);
         emit ESGDataUpdated(company, env, soc, gov);
