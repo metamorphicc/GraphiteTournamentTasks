@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract CharityReputation {
+contract CharitableFund {
     struct Recipient {
         uint256 reputationScore;
         uint256 receivedFunds;
@@ -9,7 +9,6 @@ contract CharityReputation {
     }
     
     mapping(address => Recipient) public recipients;
-    address public admin;
 
     event FundsAllocated(address indexed recipient, uint256 amount);
     event ReputationUpdated(address indexed recipient, uint256 newScore);

@@ -1,8 +1,8 @@
 const hre = require("hardhat");
 
 async function main() {
-    const MedicalServices = await hre.ethers.getContractFactory("MedicalServices");
-    const contract = await MedicalServices.deploy();
+    const ESGOracle = await hre.ethers.getContractFactory("ESGOracle");
+    const contract = await ESGOracle.deploy();
 
     await contract.waitForDeployment();
     console.log(`Contract deployed at: ${await contract.getAddress()}`);

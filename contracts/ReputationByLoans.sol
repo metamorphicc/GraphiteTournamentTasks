@@ -45,20 +45,7 @@ contract ReputationByLoans {
         
         emit LoanIssued(_user, amount, interestRate);
     }
-
-    function repayLoan(address _user, uint256 amount) external {
-        require(users[_user].isRegistered, "User not registered");
-        require(users[_user].outstandingDebt >= amount, "Repayment exceeds debt");
-
-        users[_user].outstandingDebt -= amount;
-
-        if (users[_user].outstandingDebt == 0) {
-            updateReputation(_user, 10); 
-        }
-
-        emit LoanRepaid(_user, amount);
-    }
-
+    
     function updateReputation(address _user, int256 change) internal {
         require(users[_user].isRegistered, "User not registered");
 
@@ -74,5 +61,22 @@ contract ReputationByLoans {
         emit ReputationUpdated(_user, users[_user].reputationScore);
     }
 
+    function repayLoan(address _user, uint256 amount) external {
+        require(users[_user].isRegistered, "User not registered");
+        require(users[_user].outstandingDebt >= amount, "Repayment exceeds debt");
+
+        users[_user].outstandingDebt -= amount;
+
+        if (users[_user].outstandingDebt == 0) {
+            updateReputation(_user, 10); 
+        }
+
+        emit LoanRepaid(_user, amount);
+    }
+
+    
+
     
 }
+
+
