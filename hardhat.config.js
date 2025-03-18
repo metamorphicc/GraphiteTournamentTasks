@@ -5,7 +5,7 @@ module.exports = {
   networks: {
     sepolia: {
       url: "https://eth-sepolia.g.alchemy.com/v2/iSXgqHLD2kCyRs0epg5s_lwzlmBqMega",
-      accounts: ["3b72a11498e41426b21a83d0926620d9e08b0080853344d6b388a5c5cfcbfe87"]
+      accounts: ["YOUR_PRIVATE_KEY"]
     }   
   },
   etherscan: {
