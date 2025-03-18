@@ -15,21 +15,13 @@ contract CharityReputation {
     event ReputationUpdated(address indexed recipient, uint256 newScore);
     event RecipientApproved(address indexed recipient);
     
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Not authorized");
-        _;
-    }
 
-    constructor() {
-        admin = msg.sender;
-    }
-
-    function approveRecipient(address _recipient) external onlyAdmin {
+    function approveRecipient(address _recipient) external {
         recipients[_recipient].isApproved = true;
         emit RecipientApproved(_recipient);
     }
 
-    function updateReputation(address _recipient, uint256 _score) external onlyAdmin {
+    function updateReputation(address _recipient, uint256 _score) external {
         require(recipients[_recipient].isApproved, "Recipient not approved");
         recipients[_recipient].reputationScore = _score;
         emit ReputationUpdated(_recipient, _score);

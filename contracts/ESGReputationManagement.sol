@@ -1,20 +1,19 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.0;
 
 interface IOracle {
     function getESGData(address company) external view returns (uint8, uint8, uint8);
 }
 
 contract ESGCompliance {
-    address public admin;
     IOracle public oracle;
 
     struct Company {
         string name;
-        uint8 environmentalScore; // 0-100
-        uint8 socialScore; // 0-100
-        uint8 governanceScore; // 0-100
-        uint8 esgRating; // Итоговый ESG-рейтинг (0-100)
+        uint8 environmentalScore; 
+        uint8 socialScore;
+        uint8 governanceScore; 
+        uint8 esgRating; 
         bool exists;
     }
 
@@ -23,17 +22,11 @@ contract ESGCompliance {
     event CompanyRegistered(address indexed company, string name);
     event ESGUpdated(address indexed company, uint8 esgRating);
 
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can perform this action");
-        _;
-    }
-
     constructor(address _oracle) {
-        admin = msg.sender;
         oracle = IOracle(_oracle);
     }
 
-    function registerCompany(address _company, string memory _name) external onlyAdmin {
+    function registerCompany(address _company, string memory _name) external {
         require(!companies[_company].exists, "Company already registered");
 
         companies[_company] = Company({
@@ -50,7 +43,7 @@ contract ESGCompliance {
 
     
 
-    function fetchESGFromOracle(address _company) external onlyAdmin {
+    function fetchESGFromOracle(address _company) external {
         require(companies[_company].exists, "Company not registered");
 
         (uint8 _env, uint8 _soc, uint8 _gov) = oracle.getESGData(_company);
@@ -63,7 +56,7 @@ contract ESGCompliance {
         return companies[_company].esgRating;
     }
 
-    function updateESGData(address _company, uint8 _env, uint8 _soc, uint8 _gov) public onlyAdmin {
+    function updateESGData(address _company, uint8 _env, uint8 _soc, uint8 _gov) public {
         require(companies[_company].exists, "Company not registered");
         require(_env <= 100 && _soc <= 100 && _gov <= 100, "Invalid ESG values");
 

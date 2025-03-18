@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.0;
 
 contract ComplianceCheck {
-    address public admin;
 
     struct Client {
         string fullName;
         bool kycVerified;
         bool amlClearance;
-        uint8 fatfRiskLevel; // 0 (низкий) - 10 (высокий)
+        uint8 fatfRiskLevel; 
         bool exists;
     }
 
@@ -17,16 +16,7 @@ contract ComplianceCheck {
     event ClientRegistered(address indexed client, string fullName);
     event ComplianceUpdated(address indexed client, bool kyc, bool aml, uint8 fatfRisk);
 
-    modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can perform this action");
-        _;
-    }
-
-    constructor() {
-        admin = msg.sender;
-    }
-
-    function registerClient(address _client, string memory _fullName) external onlyAdmin {
+    function registerClient(address _client, string memory _fullName) external {
         require(!clients[_client].exists, "Client already registered");
 
         clients[_client] = Client({
@@ -45,7 +35,7 @@ contract ComplianceCheck {
         bool _kycVerified, 
         bool _amlClearance, 
         uint8 _fatfRiskLevel
-    ) external onlyAdmin {
+    ) external {
         require(clients[_client].exists, "Client not registered");
         require(_fatfRiskLevel <= 10, "Invalid FATF risk level");
 
